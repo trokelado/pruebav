@@ -1,6 +1,6 @@
 module.exports = {
   head: {
-    title: 'Nuxt Firebase Auth',
+    title: 'WebShore',
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
@@ -14,15 +14,15 @@ module.exports = {
   mode: 'spa',
   loading: { color: '#3f51b5' },
   build: {
-    extend (config, ctx) {
-      if (ctx.dev && ctx.isClient) {
+    extend (config, { isDev, isClient }) {
+      if (isDev && isClient) {
         // config.module.rules.push({
         //   enforce: 'pre',
         //   test: /\.(js|vue)$/,
         //   loader: 'eslint-loader',
         //   exclude: /(node_modules)/
         // })
-      }
+       }
     },
     extractCSS: true,
     analyze: {

@@ -21,3 +21,7 @@ a.adminNavRoute.nuxt-link-exact-active.nuxt-link-active {
     font-weight: 700;
     text-decoration: none;
 }
+
+.container {
+   padding: 0!important
+}

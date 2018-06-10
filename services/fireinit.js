@@ -3,12 +3,12 @@ import 'firebase/auth'
 import 'firebase/database'
 
 var config = {
-  apiKey: "AIzaSyAzdoAjlM9YlQ-gl8VRayCxtJbnrl9qDsw",
-  authDomain: "nuxt-firebase-auth.firebaseapp.com",
-  databaseURL: "https://nuxt-firebase-auth.firebaseio.com",
-  projectId: "nuxt-firebase-auth",
-  storageBucket: "nuxt-firebase-auth.appspot.com",
-  messagingSenderId: "316484287956"
+  apiKey: "AIzaSyDPhqfnQ30WuiSl1kM1AcitFe6GW-jn4AY",
+  authDomain: "cinpadb.firebaseapp.com",
+  databaseURL: "https://cinpadb.firebaseio.com",
+  projectId: "cinpadb",
+  storageBucket: "cinpadb.appspot.com",
+  messagingSenderId: "334711240412" 
 };
 
 !firebase.apps.length ? firebase.initializeApp(config) : ''

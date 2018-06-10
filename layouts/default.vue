@@ -3,7 +3,7 @@
     <v-navigation-drawer
       persistent
       app
-      enableResizeWatcher
+      enableResizeWatcher                   
       v-model="drawer">
       <v-list>
         <v-list-tile
@@ -15,56 +15,63 @@
           :to="item.to"
         >
           <v-list-tile-action>
-            <v-icon v-html="item.icon"></v-icon>
+            <v-icon class="white blue--text" v-html="item.icon"></v-icon>
           </v-list-tile-action>
           <v-list-tile-content>
-            <v-list-tile-title v-text="item.title"></v-list-tile-title>
+            <v-list-tile-title class="blue--text" v-text="item.title"></v-list-tile-title>
           </v-list-tile-content>
         </v-list-tile>
       </v-list>
     </v-navigation-drawer>
-    <v-toolbar app fixed>
+    <v-toolbar app fixed dense>      
+      
+      <img src="/img/logos/GrupoG.png" alt="Me" height="48">              
+      <v-toolbar-title v-text="title"></v-toolbar-title>
+      <v-spacer></v-spacer>
+      <v-toolbar-items class="hidden-sm-and-down">
+        <v-btn flat class="dark blue--text text-darked-3" v-on:click="moveToScope">Scope</v-btn>
+        <v-btn flat class="dark blue--text text-darked-3" v-on:click="moveToAbout">About</v-btn>
+        <v-btn flat class="dark blue--text text-darked-3" v-on:click="moveToAdmin">Admin</v-btn>
+        <v-btn flat class="dark blue--text text-darked-3" v-on:click="moveToGis">GIS</v-btn>        
+        <v-btn flat class="dark blue--text text-darked-3" v-on:click="moveToService">Services</v-btn>        
+        <v-btn flat class="dark blue--text text-darked-3" v-on:click="moveToContact">Contact</v-btn>
+        <!-- <nuxt-link class="navRoute" to="/gis">GIS</nuxt-link> -->        
+      </v-toolbar-items>      
+      <div v-if="user" id="user" class="text-xs-center">
+        <v-menu
+          offset-x
+          :close-on-content-click="false"
+          :nudge-top="200"
+          v-model="menu">              
+          <v-btn icon class="blue white--text" slot="activator"><v-icon medium>account_circle</v-icon></v-btn>
+            <v-card>
+              <v-list>
+                <v-list-tile avatar>
+                  <v-list-tile-avatar>
+                    <img :src="$store.state.user.photoURL" alt="Me">
+                  </v-list-tile-avatar>
+                  <v-list-tile-content>
+                    <v-list-tile-title v-if="user.displayName">{{user.displayName}}</v-list-tile-title>                        
+                  </v-list-tile-content>
+                </v-list-tile>
+                <v-divider></v-divider>
+                <v-list-tile>
+                  <v-spacer></v-spacer>
+                  <v-list-tile-action>
+                    <v-btn primary class="mt-2" color="primary" @click.native="logout">
+                      Logout
+                    </v-btn>
+                  </v-list-tile-action>
+                </v-list-tile>
+              </v-list>
+            </v-card>
+        </v-menu>
+      </div>
       <v-btn
         icon
         @click.native.stop="drawer = !drawer">
-        <v-icon>menu</v-icon>
+        <v-icon class="white blue--text">menu</v-icon>
       </v-btn>
-
-      <v-toolbar-title v-text="title"></v-toolbar-title>
-      <v-spacer></v-spacer>
-      <div v-if="user" id="user" class="text-xs-center">
-            <v-menu
-              offset-x
-              :close-on-content-click="false"
-              :nudge-top="200"
-              v-model="menu">
-              <v-btn icon slot="activator"><v-icon medium>settings</v-icon></v-btn>
-                <v-card>
-                  <v-list>
-                    <v-list-tile avatar>
-                      <v-list-tile-avatar>
-                        <img :src="$store.state.user.photoURL" alt="John">
-                      </v-list-tile-avatar>
-                      <v-list-tile-content>
-                        <v-list-tile-title v-if="user.displayName">{{user.displayName}}</v-list-tile-title>
-                      </v-list-tile-content>
-                    </v-list-tile>
-                    <v-divider></v-divider>
-
-                    <v-list-tile>
-                      <v-spacer></v-spacer>
-                      <v-list-tile-action>
-                        <v-btn primary class="mt-2" color="primary" @click.native="logout">
-                          Logout
-                        </v-btn>
-                      </v-list-tile-action>
-                    </v-list-tile>
-                  </v-list>
-                </v-card>
-            </v-menu>
-
-      </div>
-
     </v-toolbar>
     <main>
      <v-container fluid>
@@ -72,7 +79,7 @@
      </v-container>
    </main>
     <v-footer :fixed="fixed" app>
-      <span>&copy; 2017</span>
+      <span>&copy; 2018</span>
     </v-footer>
   </v-app>
 </template>
@@ -85,11 +92,14 @@ export default {
       fixed: false,
       items: [
         { icon: 'home', title: 'Welcome', to: '/' },
-        { icon: 'info', title: 'About', to: '/about' },
+        { icon: 'adjust', title: 'Scope', to: '/scope' },
+        { icon: 'fingerprint', title: 'About', to: '/about' },
         { icon: 'person', title: 'Admin', to: '/admin' },
-        // { icon: 'store', title: 'FireStore', to: '/firestore' }
+        { icon: 'place', title: 'GIS', to: '/gis' },
+        { icon: 'business_center', title: 'Services', to: '/services' },        
+        { icon: 'call', title: 'Contact', to: '/contact' }
       ],
-      title: 'Nuxt Firebase Auth',
+      title: 'WebShore',
       menu: false
     }
   },
@@ -104,7 +114,25 @@ export default {
         alert('logged out!')
         this.$router.push('/')
       })
-    }
+    },
+    moveToAbout: function(value) {       
+      this.$router.push('/about')             
+    },
+    moveToScope: function(value) {       
+      this.$router.push('/scope')             
+    },
+    moveToAdmin: function(value) {       
+      this.$router.push('/admin')             
+    },
+    moveToGis: function(value) {       
+      this.$router.push('/gis')             
+    },
+    moveToService: function(value) {       
+      this.$router.push('/services')             
+    },
+    moveToContact: function(value) {       
+      this.$router.push('/contact')             
+    },    
   }
  }
 </script>
@@ -131,6 +159,8 @@ a.nuxt-link-exact-active.list__tile--active.list__tile.list__tile--link {
   color: rgba(0,0,0,.87);
   border-left: 10px solid gray;
 }
-
-
+.navRoute {
+  margin: 0em .5em;
+  padding: 0em;
+}
 </style>
